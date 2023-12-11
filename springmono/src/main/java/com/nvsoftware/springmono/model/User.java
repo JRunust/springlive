@@ -1,6 +1,9 @@
 package com.nvsoftware.springmono.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User {
+    @JsonIgnore
     private String id;
     private String name;
     private String email;
