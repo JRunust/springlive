@@ -8,16 +8,16 @@ import javax.persistence.Table;
 @Entity
 public class ProductEntity {
     @Id
-    private String productId;
+    private String id;
     private String title;
     private String description;
 
-    public String getProductId() {
-        return productId;
+    public String getId() {
+        return id;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
