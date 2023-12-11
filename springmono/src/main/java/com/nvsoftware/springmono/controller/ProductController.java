@@ -1,5 +1,6 @@
 package com.nvsoftware.springmono.controller;
 
+import com.nvsoftware.springmono.error.ProductNotFoundException;
 import com.nvsoftware.springmono.model.Product;
 import com.nvsoftware.springmono.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
