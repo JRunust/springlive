@@ -2,9 +2,7 @@ package com.nvsoftware.springmono.controller;
 
 import com.nvsoftware.springmono.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HomeController {
@@ -20,4 +18,14 @@ public class HomeController {
         user.setName("nvsoftware");
         return user;
     }
+    @GetMapping("/user/{id}/{username}")
+    public User userByPathVariable(@PathVariable("id") String id, @PathVariable("username") String username){
+        User user = new User();
+        user.setId(id);
+        user.setName(username);
+        user.setEmail("user@nvsoftware.com");
+        return user;
+    }
+
+    
 }
