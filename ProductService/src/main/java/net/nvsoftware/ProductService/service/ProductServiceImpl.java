@@ -2,9 +2,12 @@ package net.nvsoftware.ProductService.service;
 
 import net.nvsoftware.ProductService.entity.ProductEntity;
 import net.nvsoftware.ProductService.model.ProductRequest;
+import net.nvsoftware.ProductService.model.ProductResponse;
 import net.nvsoftware.ProductService.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -18,5 +21,18 @@ public class ProductServiceImpl implements ProductService {
                 quantity(productRequest.getQuantity()).build();
         productRepository.save(productEntity);
         return productEntity.getId();
+    }
+
+    @Override
+    public ProductResponse findById(long id) {
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ProductService get by id not found with id: " + id));
+        ProductResponse productResponse = ProductResponse.builder()
+                .id(productEntity.getId())
+                .name(productEntity.getName())
+                .quantity(productEntity.getQuantity())
+                .price(productEntity.getPrice())
+                .build();
+        return productResponse;
     }
 }
