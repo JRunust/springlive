@@ -1,6 +1,7 @@
 package net.nvsoftware.OrderService.service;
 
 import lombok.extern.log4j.Log4j2;
+import net.nvsoftware.OrderService.client.ProductServiceFeignClient;
 import net.nvsoftware.OrderService.entity.OrderEntity;
 import net.nvsoftware.OrderService.model.OrderRequest;
 import net.nvsoftware.OrderService.repository.OrderRepository;
@@ -14,7 +15,8 @@ import java.time.Instant;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
-
+    @Autowired
+    private ProductServiceFeignClient productServiceFeignClient;
 
     @Override
     public long placeOrder(OrderRequest orderRequest) {
@@ -30,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(orderEntity);
         log.info("Process: OrderService  placeOrder Order Entity has been saved with id: " + orderEntity.getId());
         //use order service
+        productServiceFeignClient.reduceQuantity(orderRequest.getProductId(),orderRequest.getQuantity());
+        log.info("Process: OrderService  placeOrder feign client product service reduce quantity  " + orderEntity.getQuantity());
+
         log.info("End: OrderService placeOrder");
         return 0;
     }
