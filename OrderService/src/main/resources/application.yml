@@ -11,9 +11,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     hibernate:
       ddl-auto: update
-
   application:
     name: order-service
+  config:
+    import: configserver:http://localhost:8051
 
 eureka:
   instance:
