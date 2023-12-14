@@ -1,4 +1,4 @@
-package net.nvsoftware.ProductService.entity.controller;
+package net.nvsoftware.ProductService.controller;
 
 import net.nvsoftware.ProductService.model.ProductRequest;
 import net.nvsoftware.ProductService.model.ProductResponse;
@@ -23,5 +23,12 @@ public class ProductController {
         ProductResponse byId = productService.findById(id);
         return new ResponseEntity<>(byId,HttpStatus.OK);
     }
+
+    @PutMapping("/reduceQuantity")
+    public ResponseEntity<Void> reduceQuantity(@RequestParam long id,@RequestParam long quantity){
+        productService.reduceQuantity(id,quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

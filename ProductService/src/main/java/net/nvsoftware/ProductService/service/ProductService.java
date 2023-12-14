@@ -6,4 +6,6 @@ import net.nvsoftware.ProductService.model.ProductResponse;
 public interface ProductService {
     long addProduct(ProductRequest productRequest);
     ProductResponse findById(long id);
+
+    void reduceQuantity(long id,long quantity);
 }
