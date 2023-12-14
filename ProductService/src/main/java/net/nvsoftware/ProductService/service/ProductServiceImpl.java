@@ -1,5 +1,7 @@
 package net.nvsoftware.ProductService.service;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import net.nvsoftware.ProductService.entity.ProductEntity;
 import net.nvsoftware.ProductService.model.ProductRequest;
 import net.nvsoftware.ProductService.model.ProductResponse;
@@ -10,16 +12,19 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Override
     public long addProduct(ProductRequest productRequest) {
+        log.info("Start product service: adding product");
         ProductEntity productEntity = ProductEntity.builder().
                 name(productRequest.getName()).
                 price(productRequest.getPrice()).
                 quantity(productRequest.getQuantity()).build();
         productRepository.save(productEntity);
+        log.info("End product service: adding product");
         return productEntity.getId();
     }
 

@@ -1,4 +1,4 @@
-package net.nvsoftware.ProductService.controller;
+package net.nvsoftware.ProductService.entity.controller;
 
 import net.nvsoftware.ProductService.model.ProductRequest;
 import net.nvsoftware.ProductService.model.ProductResponse;
