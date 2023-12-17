@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("product-service/product")
 public interface ProductServiceFeignClient {
     @PutMapping("/reduceQuantity")
-    public ResponseEntity<Void> reduceQuantity(@RequestParam long id, @RequestParam long quantity);
+    ResponseEntity<Void> reduceQuantity(@RequestParam long id, @RequestParam long quantity);
 }
