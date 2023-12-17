@@ -1,6 +1,6 @@
-package net.nvsoftware.ConfigService.repository;
+package net.nvsoftware.PaymentService.repository;
 
-import net.nvsoftware.ConfigService.entity.PaymentEntity;
+import net.nvsoftware.PaymentService.entity.PaymentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

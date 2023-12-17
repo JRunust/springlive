@@ -1,4 +1,4 @@
-package net.nvsoftware.ConfigService.model;
+package net.nvsoftware.PaymentService.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

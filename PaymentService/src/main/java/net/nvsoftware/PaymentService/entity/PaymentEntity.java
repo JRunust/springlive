@@ -1,4 +1,4 @@
-package net.nvsoftware.ConfigService.entity;
+package net.nvsoftware.PaymentService.entity;
 
 
 import lombok.AllArgsConstructor;
