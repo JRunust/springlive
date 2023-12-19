@@ -5,10 +5,12 @@ import net.nvsoftware.OrderService.client.PaymentServiceFeignClient;
 import net.nvsoftware.OrderService.client.ProductServiceFeignClient;
 import net.nvsoftware.OrderService.entity.OrderEntity;
 import net.nvsoftware.OrderService.model.OrderRequest;
+import net.nvsoftware.OrderService.model.OrderResponse;
 import net.nvsoftware.OrderService.model.PaymentRequest;
 import net.nvsoftware.OrderService.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 
@@ -21,6 +23,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductServiceFeignClient productServiceFeignClient;
     @Autowired
     private PaymentServiceFeignClient paymentServiceFeignClient;
+    @Autowired
+    private RestTemplate restTemplate;
     @Override
     public long placeOrder(OrderRequest orderRequest) {
         log.info("Start: OrderService placeOrder");
@@ -56,5 +60,33 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("End: OrderService placeOrder done with order id " + orderEntity.getId());
         return orderEntity.getId();
+    }
+    @Override
+    public OrderResponse getOrderDetailById(long orderId) {
+        log.info("Start: OrderService getOrderDetailById");
+        OrderEntity orderEntity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("OrderService getOrderDetailById: Order Not Found with id: " + orderId));
+
+        OrderResponse.ProductResponse productResponse = restTemplate.getForObject(
+                "http://PRODUCT-SERVICE/product/" + orderEntity.getProductId(),
+                OrderResponse.ProductResponse.class
+        );
+
+        OrderResponse.PaymentResponse paymentResponse  = restTemplate.getForObject(
+                "http://PAYMENT-SERVICE/payment/" + orderEntity.getId(),
+                OrderResponse.PaymentResponse.class
+        );
+
+        OrderResponse orderResponse = OrderResponse.builder()
+                .orderId(orderEntity.getId())
+                .orderStatus(orderEntity.getOrderStatus())
+                .orderDate(orderEntity.getOrderDate())
+                .totalAmount(orderEntity.getTotalAmount())
+                .productResponse(productResponse)
+                .paymentResponse(paymentResponse)
+                .build();
+
+        log.info("End: OrderService getOrderDetailById");
+        return orderResponse;
     }
 }
